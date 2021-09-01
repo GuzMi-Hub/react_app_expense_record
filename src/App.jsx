@@ -7,6 +7,7 @@ import {
   ContainerHeader,
 } from "./elements/Header";
 import Button from "./elements/Button";
+import ButtonLogOut from "./components/ButtonLogOut";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <ContainerButtons>
             <Button to="/categorias">Categorías</Button>
             <Button to="lista">Lista de Gastos</Button>
-            <Button to="/">X</Button>
+            <ButtonLogOut />
           </ContainerButtons>
         </ContainerHeader>
       </Header>

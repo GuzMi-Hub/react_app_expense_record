@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { Header, Title, ContainerHeader } from "../elements/Header";
 import { Form, Input, ButtonContainer } from "../elements/FormElements";
 import { ReactComponent as SvgLogin } from "../assets/images/registro.svg";
+import { auth } from "../firebase/firebaesConfig";
+import { useHistory } from "react-router";
+import Alert from "../elements/Alert";
 
 const Svg = styled(SvgLogin)`
   width: 100%;
@@ -13,9 +16,13 @@ const Svg = styled(SvgLogin)`
 `;
 
 const Register = () => {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
+  const [stateAlert, setStateAlert] = useState(false);
+  const [alert, setAlert] = useState({});
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -33,26 +40,54 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setStateAlert(false);
+    setAlert({});
 
     const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
     if (!expresionRegular.test(email)) {
-      console.log("Please enter a valid email");
+      setStateAlert(true);
+      setAlert({ type: "error", msg: "Porfavor coloque un email valido" });
       return;
     }
 
     if (email === "" || password === "" || password2 === "") {
-      console.log("please fill in all the data");
+      setStateAlert(true);
+      setAlert({ type: "error", msg: "Porfavor rellene todos los datos" });
       return;
     }
 
     if (password !== password2) {
-      console.log("Las contraseñas no son iguales");
+      setStateAlert(true);
+      setAlert({ type: "error", msg: "Las contraseñas no son iguales" });
       return;
     }
 
-    console.log("regsitrsamos usuarios");
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+      history.push("/");
+    } catch (error) {
+      setStateAlert(true);
+      let mensaje;
+      switch (error.code) {
+        case "auth/weak-password":
+          mensaje = "La contraseña tiene que ser de al menos 6 caracteres.";
+          break;
+        case "auth/email-already-in-use":
+          mensaje =
+            "Ya existe una cuenta con el correo electrónico proporcionado.";
+          break;
+        case "auth/invalid-email":
+          mensaje = "El correo electrónico no es válido.";
+          break;
+        default:
+          mensaje = "Hubo un error al intentar crear la cuenta.";
+          break;
+      }
+      setAlert({ type: "error", msg: mensaje });
+    }
+
     setEmail("");
     setPassword("");
     setPassword2("");
@@ -100,6 +135,12 @@ const Register = () => {
           </Button>
         </ButtonContainer>
       </Form>
+      <Alert
+        type={alert.type}
+        msg={alert.msg}
+        setStateAelert={setStateAlert}
+        stateAlert={stateAlert}
+      />
     </>
   );
 };
