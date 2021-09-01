@@ -21,7 +21,7 @@ function App() {
           <ContainerButtons>
             <Button to="/categorias">Categorías</Button>
             <Button to="lista">Lista de Gastos</Button>
-            <Button>X</Button>
+            <Button to="/">X</Button>
           </ContainerButtons>
         </ContainerHeader>
       </Header>
