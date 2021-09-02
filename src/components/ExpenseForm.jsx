@@ -9,11 +9,13 @@ import {
 } from "../elements/FormElements";
 import { ReactComponent as IconPlus } from "../assets/images/plus.svg";
 import SelectCategory from "./SelectCategory";
+import DatePicker from "./DatePicker";
 
 const ExpenseForm = () => {
   const [inputDescription, setInputDescription] = useState("");
   const [inputAmount, setinputAmount] = useState("");
   const [category, setCategory] = useState("Hogar");
+  const [date, setDate] = useState(new Date());
 
   const handleOnChange = (e) => {
     if (e.target.name === "description") {
@@ -30,10 +32,13 @@ const ExpenseForm = () => {
     setinputAmount("");
   };
 
+  console.log(date);
+
   return (
     <Form onSubmit={handleSubmit} autoComplete="off">
       <FilterContainer>
         <SelectCategory category={category} setCategory={setCategory} />
+        <DatePicker date={date} setDate={setDate} />
       </FilterContainer>
       <div>
         <Input
