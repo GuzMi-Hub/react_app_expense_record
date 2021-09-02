@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import theme from "../theme";
 import { ReactComponent as DownIcon } from "../assets/images/down.svg";
+import IconCategory from "../elements/IconCategory";
 
 const SelectContainer = styled.div`
   background: ${theme.grisClaro};
@@ -90,6 +91,7 @@ const SelectCategory = ({ category, setCategory }) => {
                 onClick={handleClick}
                 data-valor={category.id}
               >
+                <IconCategory id={category.id} />
                 {category.texto}
               </Option>
             );
