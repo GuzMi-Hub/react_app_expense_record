@@ -8,10 +8,12 @@ import {
   ButtonContainer,
 } from "../elements/FormElements";
 import { ReactComponent as IconPlus } from "../assets/images/plus.svg";
+import SelectCategory from "./SelectCategory";
 
 const ExpenseForm = () => {
   const [inputDescription, setInputDescription] = useState("");
   const [inputAmount, setinputAmount] = useState("");
+  const [category, setCategory] = useState("Hogar");
 
   const handleOnChange = (e) => {
     if (e.target.name === "description") {
@@ -30,7 +32,9 @@ const ExpenseForm = () => {
 
   return (
     <Form onSubmit={handleSubmit} autoComplete="off">
-      <FilterContainer></FilterContainer>
+      <FilterContainer>
+        <SelectCategory category={category} setCategory={setCategory} />
+      </FilterContainer>
       <div>
         <Input
           type="text"
