@@ -20,6 +20,12 @@ import {
   ContenedorSubtitulo,
   Subtitulo,
 } from "../elements/ListElements";
+import IconCategory from "../elements/IconCategory";
+import toCurrency from "../functions/toCurrency";
+import { ReactComponent as EditIcon } from "../assets/images/editar.svg";
+import { ReactComponent as RemoveIcon } from "../assets/images/borrar.svg";
+import { Link } from "react-router-dom";
+import Button from "../elements/Button";
 
 const ExpenseList = () => {
   const expenses = useGetExpense();
@@ -35,8 +41,36 @@ const ExpenseList = () => {
       </Header>
       <Lista>
         {expenses.map((expense) => {
-          return <ElementoLista>{expense.descripcion}</ElementoLista>;
+          return (
+            <ElementoLista key={expense.id}>
+              <Categoria>
+                <IconCategory id={expense.categoria} />
+                {expense.categoria}
+              </Categoria>
+              <Descripcion>{expense.descripcion}</Descripcion>
+              <Valor>{toCurrency(expense.cantidad)}</Valor>
+              <ContenedorBotones>
+                <BotonAccion as={Link} to={`/editar/${expense.id}`}>
+                  <EditIcon />
+                </BotonAccion>
+                <BotonAccion>
+                  <RemoveIcon />
+                </BotonAccion>
+              </ContenedorBotones>
+            </ElementoLista>
+          );
         })}
+        <ContenedorBotonCentral>
+          <BotonCargarMas>Cargar Más</BotonCargarMas>
+        </ContenedorBotonCentral>
+        {expenses.length === 0 && (
+          <ContenedorSubtitulo>
+            <Subtitulo>No hay gastos por mostrar</Subtitulo>
+            <Button as={Link} to="/">
+              Agregar Gasto
+            </Button>
+          </ContenedorSubtitulo>
+        )}
       </Lista>
       <BarExpense />
     </>
