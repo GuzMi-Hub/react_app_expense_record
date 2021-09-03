@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 const useGetExpense = () => {
   const { user } = useAuth();
-  const [expense, setExpense] = useState([1, 2, 3]);
+  const [expense, setExpense] = useState([]);
 
   useEffect(() => {
     const unSuscribe = db
@@ -23,7 +23,7 @@ const useGetExpense = () => {
     return unSuscribe;
   }, [user]);
 
-  return [expense];
+  return expense;
 };
 
 export default useGetExpense;
