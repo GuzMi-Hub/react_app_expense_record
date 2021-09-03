@@ -10,12 +10,17 @@ import {
 import { ReactComponent as IconPlus } from "../assets/images/plus.svg";
 import SelectCategory from "./SelectCategory";
 import DatePicker from "./DatePicker";
+import addExpense from "../firebase/addExpense";
+import getUnixTime from "date-fns/getUnixTime";
+import fromUnixTime from "date-fns/fromUnixTime";
+import { useAuth } from "../context/AuthContext";
 
 const ExpenseForm = () => {
   const [inputDescription, setInputDescription] = useState("");
   const [inputAmount, setinputAmount] = useState("");
   const [category, setCategory] = useState("Hogar");
   const [date, setDate] = useState(new Date());
+  const { user } = useAuth();
 
   const handleOnChange = (e) => {
     if (e.target.name === "description") {
@@ -28,11 +33,19 @@ const ExpenseForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    let amount = parseFloat(inputAmount).toFixed(2);
+    let dateInSeconds = getUnixTime(date);
+
+    addExpense({
+      categoria: category,
+      descripcion: inputDescription,
+      cantidad: amount,
+      fecha: dateInSeconds,
+      uidUsuario: user.uid,
+    });
     setInputDescription("");
     setinputAmount("");
   };
-
-  console.log(date);
 
   return (
     <Form onSubmit={handleSubmit} autoComplete="off">
