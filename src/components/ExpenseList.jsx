@@ -2,13 +2,9 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { Header, Title } from "../elements/Header";
 import BackButton from "../elements/BackButton";
-import { useAuth } from "../context/AuthContext";
+import BarExpense from "./BarExpense";
 
 const ExpenseList = () => {
-  const { user } = useAuth();
-
-  console.log(user);
-
   return (
     <>
       <Helmet>
@@ -19,6 +15,7 @@ const ExpenseList = () => {
         <BackButton />
         <Title> Lista de gastos</Title>
       </Header>
+      <BarExpense />
     </>
   );
 };

@@ -7,6 +7,7 @@ import {
   ContainerHeader,
 } from "../elements/Header";
 import Button from "../elements/Button";
+import BarExpense from "./BarExpense";
 
 const EditExpense = () => {
   return (
@@ -25,6 +26,7 @@ const EditExpense = () => {
           </ContainerButtons>
         </ContainerHeader>
       </Header>
+      <BarExpense />
     </>
   );
 };
