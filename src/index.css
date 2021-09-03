@@ -20,6 +20,11 @@ body {
 #root {
   width: 100%;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 @media screen and (max-width: 60rem) /* 950px */ {
   :root {
