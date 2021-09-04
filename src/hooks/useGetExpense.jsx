@@ -1,60 +1,25 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebaesConfig";
-import { useAuth } from "../context/AuthContext";
+import { useHistory } from "react-router";
 
-const useGetExpense = () => {
-  const { user } = useAuth();
-  const [expense, setExpense] = useState([]);
-  const [lastExpense, setLastExpense] = useState(null);
-  const [thereAreMoreExpenses, setThereAreMoreExpenses] = useState(false);
-
-  const getMoreExpenses = () => {
-    db.collection("gastos")
-      .where("uidUsuario", "==", user.uid)
-      .orderBy("fecha", "desc")
-      .limit(10)
-      .startAfter(lastExpense)
-      .onSnapshot((snapshot) => {
-        if (snapshot.docs.length > 0) {
-          setLastExpense(snapshot.docs[snapshot.docs.length - 1]);
-          setExpense(
-            expense.concat(
-              snapshot.docs.map((doc) => {
-                return { ...doc.data(), id: doc.id };
-              })
-            )
-          );
-        } else {
-          setThereAreMoreExpenses(false);
-        }
-      });
-  };
+const useGetExpense = (id) => {
+  const [expense, setExpense] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
-    const unSuscribe = db
-      .collection("gastos")
-      .where("uidUsuario", "==", user.uid)
-      .orderBy("fecha", "desc")
-      .limit(10)
-      .onSnapshot((snapshot) => {
-        if (snapshot.docs.length > 0) {
-          setLastExpense(snapshot.docs[snapshot.docs.length - 1]);
-          setThereAreMoreExpenses(true);
+    db.collection("gastos")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setExpense(doc);
         } else {
-          setThereAreMoreExpenses(false);
+          history.push("/lista");
         }
-
-        setExpense(
-          snapshot.docs.map((doc) => {
-            return { ...doc.data(), id: doc.id };
-          })
-        );
       });
+  }, [history, id]);
 
-    return unSuscribe;
-  }, [user]);
-
-  return [expense, thereAreMoreExpenses, getMoreExpenses];
+  return [expense];
 };
 
 export default useGetExpense;

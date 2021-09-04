@@ -1,15 +1,17 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import {
-  Header,
-  Title,
-  ContainerButtons,
-  ContainerHeader,
-} from "../elements/Header";
-import Button from "../elements/Button";
+import { Header, Title } from "../elements/Header";
+import BackButton from "../elements/BackButton";
 import BarExpense from "./BarExpense";
+import ExpenseForm from "./ExpenseForm";
+import { useParams } from "react-router";
+import useGetExpense from "../hooks/useGetExpense";
 
 const EditExpense = () => {
+  const { id } = useParams();
+
+  const [expense] = useGetExpense(id);
+
   return (
     <>
       <Helmet>
@@ -17,15 +19,10 @@ const EditExpense = () => {
       </Helmet>
 
       <Header>
-        <ContainerHeader>
-          <Title> Editar Gasto</Title>
-          <ContainerButtons>
-            <Button to="/categorias">Categorías</Button>
-            <Button to="lista">Lista de Gastos</Button>
-            <Button>X</Button>
-          </ContainerButtons>
-        </ContainerHeader>
+        <BackButton />
+        <Title> Editar Gasto</Title>
       </Header>
+      <ExpenseForm />
       <BarExpense />
     </>
   );

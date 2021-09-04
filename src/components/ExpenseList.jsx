@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { Header, Title } from "../elements/Header";
 import BackButton from "../elements/BackButton";
 import BarExpense from "./BarExpense";
-import useGetExpense from "../hooks/useGetExpense";
+import useGetExpenses from "../hooks/useGetExpenses";
 import {
   Lista,
   ElementoLista,
@@ -29,7 +29,7 @@ import { es } from "date-fns/locale";
 import removeExpense from "../firebase/removeExpense";
 
 const ExpenseList = () => {
-  const [expenses, thereAreMoreExpenses, getMoreExpenses] = useGetExpense();
+  const [expenses, thereAreMoreExpenses, getMoreExpenses] = useGetExpenses();
 
   const formatDate = (date) => {
     return format(fromUnixTime(date), "dd 'de' MMMM 'del' yyyy", {
