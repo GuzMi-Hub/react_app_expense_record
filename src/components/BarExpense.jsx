@@ -2,12 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../theme";
 import formatAmount from "../functions/toCurrency";
+import { useTotalByMonth } from "../context/TotalSpentForTheMontContext";
 
 const BarExpense = () => {
+  const { total } = useTotalByMonth();
+
   return (
     <BarraTotal>
       <p>Total Gastado en el mes: </p>
-      <p>{formatAmount(0.0)}</p>
+      <p>{formatAmount(total)}</p>
     </BarraTotal>
   );
 };

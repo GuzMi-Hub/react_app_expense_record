@@ -20,15 +20,19 @@ const useGetExpenseOfTheMonth = () => {
         .where("fecha", "<=", END_OF_MONTH)
         .where("uidUsuario", "==", user.uid)
         .onSnapshot((snapshot) => {
-          snapshot.docs.map((doc) => {
-            return { ...doc.data(), id: doc.id };
-          });
+          setExpenses(
+            snapshot.docs.map((doc) => {
+              return { ...doc.data(), id: doc.id };
+            })
+          );
         });
       return unSubs;
+    } else {
+      console.error("error en usuario:" + user);
     }
   }, [user]);
 
-  return [expenses];
+  return expenses;
 };
 
 export default useGetExpenseOfTheMonth;

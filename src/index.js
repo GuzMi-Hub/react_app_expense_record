@@ -15,6 +15,7 @@ import favicon from "./assets/images/logo.png";
 import Fondo from "./elements/Fondo";
 import { AuthProvider } from "./context/AuthContext";
 import PrivteRoute from "./components/PrivateRoute";
+import { TotalSpentProvider } from "./context/TotalSpentForTheMontContext";
 
 WebFont.load({
   google: {
@@ -30,26 +31,28 @@ ReactDOM.render(
         <title>AppGastos</title>
       </Helmet>
       <AuthProvider>
-        <BrowserRouter>
-          <Contenedor>
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <PrivteRoute path="/editar/:id">
-                <EditExpense />
-              </PrivteRoute>
-              <PrivteRoute path="/lista">
-                <ExpenseList />
-              </PrivteRoute>
-              <PrivteRoute path="/categorias">
-                <ExpensePerCategory />
-              </PrivteRoute>
-              <PrivteRoute path="/" exact={true}>
-                <App />
-              </PrivteRoute>
-            </Switch>
-          </Contenedor>
-        </BrowserRouter>
+        <TotalSpentProvider>
+          <BrowserRouter>
+            <Contenedor>
+              <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <PrivteRoute path="/editar/:id">
+                  <EditExpense />
+                </PrivteRoute>
+                <PrivteRoute path="/lista">
+                  <ExpenseList />
+                </PrivteRoute>
+                <PrivteRoute path="/categorias">
+                  <ExpensePerCategory />
+                </PrivteRoute>
+                <PrivteRoute path="/" exact={true}>
+                  <App />
+                </PrivteRoute>
+              </Switch>
+            </Contenedor>
+          </BrowserRouter>
+        </TotalSpentProvider>
       </AuthProvider>
       <Fondo />
     </>
