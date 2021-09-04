@@ -18,7 +18,7 @@ const EditExpense = () => {
 
       <Header>
         <ContainerHeader>
-          <Title> Agregar Gasto</Title>
+          <Title> Editar Gasto</Title>
           <ContainerButtons>
             <Button to="/categorias">Categorías</Button>
             <Button to="lista">Lista de Gastos</Button>

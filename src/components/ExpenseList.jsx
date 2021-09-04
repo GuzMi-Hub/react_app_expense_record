@@ -26,6 +26,7 @@ import { Link } from "react-router-dom";
 import Button from "../elements/Button";
 import { format, fromUnixTime } from "date-fns";
 import { es } from "date-fns/locale";
+import removeExpense from "../firebase/removeExpense";
 
 const ExpenseList = () => {
   const [expenses, thereAreMoreExpenses, getMoreExpenses] = useGetExpense();
@@ -78,7 +79,7 @@ const ExpenseList = () => {
                   <BotonAccion as={Link} to={`/editar/${expense.id}`}>
                     <EditIcon />
                   </BotonAccion>
-                  <BotonAccion>
+                  <BotonAccion onClick={() => removeExpense(expense.id)}>
                     <RemoveIcon />
                   </BotonAccion>
                 </ContenedorBotones>

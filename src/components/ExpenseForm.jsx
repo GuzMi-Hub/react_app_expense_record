@@ -19,7 +19,7 @@ import Alert from "../elements/Alert";
 const ExpenseForm = () => {
   const [inputDescription, setInputDescription] = useState("");
   const [inputAmount, setinputAmount] = useState("");
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState("hogar");
   const [date, setDate] = useState(new Date());
   const [stateAlert, setStateAlert] = useState(false);
   const [alert, setAlert] = useState({});
