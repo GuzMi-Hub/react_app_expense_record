@@ -41,7 +41,7 @@ const ExpenseForm = ({ expense }) => {
         history.push("/lista");
       }
     }
-  }, [expense, user]);
+  }, [expense, user, history]);
 
   const handleOnChange = (e) => {
     if (e.target.name === "description") {
