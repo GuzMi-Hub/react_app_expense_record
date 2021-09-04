@@ -7,8 +7,6 @@ import useGetExpense from "../hooks/useGetExpense";
 import {
   Lista,
   ElementoLista,
-  ListaDeCategorias,
-  ElementoListaCategorias,
   Categoria,
   Descripcion,
   Valor,
@@ -26,9 +24,31 @@ import { ReactComponent as EditIcon } from "../assets/images/editar.svg";
 import { ReactComponent as RemoveIcon } from "../assets/images/borrar.svg";
 import { Link } from "react-router-dom";
 import Button from "../elements/Button";
+import { format, fromUnixTime } from "date-fns";
+import { es } from "date-fns/locale";
 
 const ExpenseList = () => {
-  const expenses = useGetExpense();
+  const [expenses, thereAreMoreExpenses, getMoreExpenses] = useGetExpense();
+
+  const formatDate = (date) => {
+    return format(fromUnixTime(date), "dd 'de' MMMM 'del' yyyy", {
+      locale: es,
+    });
+  };
+
+  const dateEquals = (expenses, index, expense) => {
+    if (index !== 0) {
+      const currentDate = formatDate(expense.fecha);
+      const previousExpenseDate = formatDate(expenses[index - 1].fecha);
+
+      if (currentDate === previousExpenseDate) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -40,29 +60,40 @@ const ExpenseList = () => {
         <Title> Lista de gastos</Title>
       </Header>
       <Lista>
-        {expenses.map((expense) => {
+        {expenses.map((expense, index) => {
           return (
-            <ElementoLista key={expense.id}>
-              <Categoria>
-                <IconCategory id={expense.categoria} />
-                {expense.categoria}
-              </Categoria>
-              <Descripcion>{expense.descripcion}</Descripcion>
-              <Valor>{toCurrency(expense.cantidad)}</Valor>
-              <ContenedorBotones>
-                <BotonAccion as={Link} to={`/editar/${expense.id}`}>
-                  <EditIcon />
-                </BotonAccion>
-                <BotonAccion>
-                  <RemoveIcon />
-                </BotonAccion>
-              </ContenedorBotones>
-            </ElementoLista>
+            <div key={expense.id}>
+              {!dateEquals(expenses, index, expense) && (
+                <Fecha>{formatDate(expense.fecha)}</Fecha>
+              )}
+
+              <ElementoLista>
+                <Categoria>
+                  <IconCategory id={expense.categoria} />
+                  {expense.categoria}
+                </Categoria>
+                <Descripcion>{expense.descripcion}</Descripcion>
+                <Valor>{toCurrency(expense.cantidad)}</Valor>
+                <ContenedorBotones>
+                  <BotonAccion as={Link} to={`/editar/${expense.id}`}>
+                    <EditIcon />
+                  </BotonAccion>
+                  <BotonAccion>
+                    <RemoveIcon />
+                  </BotonAccion>
+                </ContenedorBotones>
+              </ElementoLista>
+            </div>
           );
         })}
-        <ContenedorBotonCentral>
-          <BotonCargarMas>Cargar Más</BotonCargarMas>
-        </ContenedorBotonCentral>
+
+        {thereAreMoreExpenses && (
+          <ContenedorBotonCentral>
+            <BotonCargarMas onClick={() => getMoreExpenses()}>
+              Cargar Más
+            </BotonCargarMas>
+          </ContenedorBotonCentral>
+        )}
         {expenses.length === 0 && (
           <ContenedorSubtitulo>
             <Subtitulo>No hay gastos por mostrar</Subtitulo>
