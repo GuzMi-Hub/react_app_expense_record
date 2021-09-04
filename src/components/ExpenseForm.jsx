@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../elements/Button";
 import {
   FilterContainer,
@@ -15,8 +15,10 @@ import getUnixTime from "date-fns/getUnixTime";
 import fromUnixTime from "date-fns/fromUnixTime";
 import { useAuth } from "../context/AuthContext";
 import Alert from "../elements/Alert";
+import { useHistory } from "react-router";
+import editExpense from "../firebase/editExpense";
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ expense }) => {
   const [inputDescription, setInputDescription] = useState("");
   const [inputAmount, setinputAmount] = useState("");
   const [category, setCategory] = useState("hogar");
@@ -25,6 +27,21 @@ const ExpenseForm = () => {
   const [alert, setAlert] = useState({});
 
   const { user } = useAuth();
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (expense) {
+      if (expense.data().uidUsuario === user.uid) {
+        setCategory(expense.data().categoria);
+        setDate(fromUnixTime(expense.data().fecha));
+        setInputDescription(expense.data().descripcion);
+        setinputAmount(expense.data().cantidad);
+      } else {
+        history.push("/lista");
+      }
+    }
+  }, [expense, user]);
 
   const handleOnChange = (e) => {
     if (e.target.name === "description") {
@@ -41,24 +58,40 @@ const ExpenseForm = () => {
       let amount = parseFloat(inputAmount).toFixed(2);
       let dateInSeconds = getUnixTime(date);
 
-      addExpense({
-        categoria: category,
-        descripcion: inputDescription,
-        cantidad: amount,
-        fecha: dateInSeconds,
-        uidUsuario: user.uid,
-      })
-        .then(() => {
-          setStateAlert(true);
-          setAlert({ type: "exito", msg: "Gasto agregado exitosamente" });
-          setInputDescription("");
-          setinputAmount("");
-          setDate(new Date());
+      if (expense) {
+        editExpense({
+          id: expense.id,
+          categoria: category,
+          descripcion: inputDescription,
+          cantidad: amount,
+          fecha: dateInSeconds,
         })
-        .catch((error) => {
-          setStateAlert(true);
-          setAlert({ type: "error", msg: error });
-        });
+          .then(() => {
+            history.push("/lista");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        addExpense({
+          categoria: category,
+          descripcion: inputDescription,
+          cantidad: amount,
+          fecha: dateInSeconds,
+          uidUsuario: user.uid,
+        })
+          .then(() => {
+            setStateAlert(true);
+            setAlert({ type: "exito", msg: "Gasto agregado exitosamente" });
+            setInputDescription("");
+            setinputAmount("");
+            setDate(new Date());
+          })
+          .catch((error) => {
+            setStateAlert(true);
+            setAlert({ type: "error", msg: error });
+          });
+      }
     } else {
       setStateAlert(true);
       setAlert({ type: "error", msg: "Complete el formulario por favor" });
@@ -98,7 +131,7 @@ const ExpenseForm = () => {
         </div>
         <ButtonContainer>
           <Button as="button" primario conIcono type="submit">
-            Agregar Gasto
+            {!expense ? "Agregar Gasto" : "Editar Gasto"}
             <IconPlus />
           </Button>
         </ButtonContainer>
