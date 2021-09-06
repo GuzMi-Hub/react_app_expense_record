@@ -6,7 +6,7 @@ const TotalSpentContext = React.createContext();
 const useTotalByMonth = () => useContext(TotalSpentContext);
 
 const TotalSpentProvider = ({ children }) => {
-  const [total, setTotal] = useState(7);
+  const [total, setTotal] = useState(0);
   const expensesByMonth = useGetExpenseOfTheMonth();
 
   useEffect(() => {

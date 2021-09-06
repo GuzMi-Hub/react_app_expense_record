@@ -70,7 +70,7 @@ const ExpenseForm = ({ expense }) => {
             history.push("/lista");
           })
           .catch((error) => {
-            console.error(error);
+            console.error("error en editexpense:" + error);
           });
       } else {
         addExpense({

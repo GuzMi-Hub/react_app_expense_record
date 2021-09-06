@@ -3,8 +3,11 @@ import { Helmet } from "react-helmet";
 import { Header, Title } from "../elements/Header";
 import BackButton from "../elements/BackButton";
 import BarExpense from "./BarExpense";
+import useGetExpenseOfTheMonthPerCategory from "../hooks/useGetExpenseOfTheMonthPerCategory";
 
 const ExpensePerCategory = () => {
+  const expensesPerCategory = useGetExpenseOfTheMonthPerCategory();
+  console.log(expensesPerCategory);
   return (
     <>
       <Helmet>
