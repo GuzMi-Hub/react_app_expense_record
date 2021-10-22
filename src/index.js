@@ -17,6 +17,9 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivteRoute from "./components/PrivateRoute";
 import { TotalSpentProvider } from "./context/TotalSpentForTheMontContext";
 
+
+console.log(process.env.REACT_APP_FIREBASE_API_KEY);
+
 WebFont.load({
   google: {
     families: ["Work Sans: 400,500,700", "Droid Serif"],
