@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import Button from "../elements/Button";
 import styled from "styled-components";
 import { Header, Title, ContainerHeader } from "../elements/Header";
-import { Form, Input, ButtonContainer } from "../elements/FormElements";
+import { Form, Input, ButtonContainer, InputPassword } from "../elements/FormElements";
 import { ReactComponent as SvgLogin } from "../assets/images/registro.svg";
 import { auth } from "../firebase/firebaesConfig";
 import { useHistory } from "react-router";
@@ -122,7 +122,7 @@ const Register = () => {
           value={password}
           onChange={handleChange}
         />
-        <Input
+        <InputPassword
           type="password"
           name="password2"
           placeholder="Repetir Contraseña"
