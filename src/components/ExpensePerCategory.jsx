@@ -15,7 +15,6 @@ import IconCategory from "../elements/IconCategory";
 
 const ExpensePerCategory = () => {
   const expensesPerCategory = useGetExpenseOfTheMonthPerCategory();
-  console.log(expensesPerCategory);
   return (
     <>
       <Helmet>
