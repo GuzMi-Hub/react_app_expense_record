@@ -58,7 +58,12 @@ const ExpenseForm = ({ expense }) => {
       let amount = parseFloat(inputAmount).toFixed(2);
       let dateInSeconds = getUnixTime(date);
 
-      if (expense) {
+      
+      if(isNaN(dateInSeconds)){
+            setStateAlert(true);
+            setAlert({ type: "error", msg: "Introduzca una fecha correcta" });
+      }
+      else if(expense) {
         editExpense({
           id: expense.id,
           categoria: category,
