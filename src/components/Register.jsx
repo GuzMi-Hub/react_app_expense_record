@@ -115,17 +115,17 @@ const Register = () => {
           value={email}
           onChange={handleChange}
         />
-        <Input
+        <InputPassword
           type="password"
           name="password"
-          placeholder="Contraseña"
+          placeholder="CONTRASEÑA"
           value={password}
           onChange={handleChange}
         />
         <InputPassword
           type="password"
           name="password2"
-          placeholder="Repetir Contraseña"
+          placeholder="REPETIR CONTRASEÑA"
           value={password2}
           onChange={handleChange}
         />
