@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import Button from "../elements/Button";
 import styled from "styled-components";
 import { Header, Title, ContainerHeader } from "../elements/Header";
-import { Form, Input, ButtonContainer } from "../elements/FormElements";
+import { Form, Input, ButtonContainer, InputPassword } from "../elements/FormElements";
 import { ReactComponent as SvgLogin } from "../assets/images/login.svg";
 import Alert from "../elements/Alert";
 import { auth } from "../firebase/firebaesConfig";
@@ -101,7 +101,7 @@ const Login = () => {
           value={email}
           onChange={handleChange}
         />
-        <Input
+        <InputPassword
           type="password"
           name="password"
           placeholder="Contraseña"

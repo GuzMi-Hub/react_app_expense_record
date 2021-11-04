@@ -51,6 +51,17 @@ const Input = styled.input`
     font-size: 2.2rem; /* 24px */
   }
 `;
+const InputPassword = styled.input`
+  font-size: 2.5rem; /* 40px */
+  border: none;
+  border-bottom: 2px solid ${theme.grisClaro};
+  outline: none;
+
+  @media (max-width: 60rem) {
+    /* 950px */
+    font-size: 2.2rem; /* 24px */
+  }
+`;
 
 const BigInput = styled(Input)`
   font-size: 4.37rem; /* 70px */
@@ -63,4 +74,4 @@ const ButtonContainer = styled.div`
   margin: 2.5rem 0; /* 40px */
 `;
 
-export { FilterContainer, Form, Input, BigInput, ButtonContainer };
+export { FilterContainer, Form, Input, BigInput, ButtonContainer, InputPassword };
