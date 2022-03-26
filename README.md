@@ -1,4 +1,4 @@
-Agradecimiento a los cursos de Fernando Herrera❤.
+Agradecimiento a los cursos de Carlos Arturo Esparza "FalconMaster"❤.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
